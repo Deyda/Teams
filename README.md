@@ -1,2 +1,2 @@
-# PowerShell
+# Teams
 PowerShell Scripts
