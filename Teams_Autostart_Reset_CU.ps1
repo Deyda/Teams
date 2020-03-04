@@ -5,6 +5,12 @@ This script allows you to reset all autostart settings to the default settings f
 If you want to use the "Prevent Microsoft Teams from starting automatically after installation"
 Group Policy setting, make sure you first set the Group Policy setting to the value you want 
 before you run this script.
+
+Script must be executed once in machine context (Administrative PowerShell)
+You must first use the other Script for the Machine Context (Teams_Autostart_Reset_LM.ps1)
+
+.AUTHOR
+Manuel Winkel <www.deyda.net>
 #>
 
 $ErrorActionPreference = "Stop"
@@ -85,11 +91,8 @@ if($null -eq $teamsProc) {
     # 5. remove HKCU:\Software\Microsoft\Office\Outlook\Addins\TeamsAddin.FastConnect registry key
     Remove-Item -Path "HKCU:\Software\Microsoft\Office\Outlook\Addins\TeamsAddin.FastConnect" -ErrorAction SilentlyContinue
 
-    # 6. restore HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run\com.squirrel.Teams.Teams
-    if (!(Test-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "com.squirrel.Teams.Teams")) {
-        Write-Host "Restoring registry key HKCU\Software\Microsoft\Windows\CurrentVersion\Run\com.squirrel.Teams.Teams"
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "com.squirrel.Teams.Teams" -Value "$TeamsUpdatePath --processStart ""Teams.exe"" --process-start-args ""--system-initiated"""
-    }
+    # 6. remove HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run\com.squirrel.Teams.Teams
+    Test-Remove-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "com.squirrel.Teams.Teams"
 
     # 7. We are checking whether there are entries 'isLoggedOut' and 'openAtLogin' in the desktop-config.json file
     if (Test-Path -Path $TeamsDesktopConfigJsonPath) {
