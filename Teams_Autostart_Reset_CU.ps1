@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-This script allows you to delete all autostart settings for Teams.
+This script allows you to delete all autostart settings for Teams from the user context.
 .DESCRIPTION
 If you want to use the "Prevent Microsoft Teams from starting automatically after installation"
 Group Policy setting, make sure you first set the Group Policy setting to the value you want 
 before you run this script.
 
-Script must be executed once in machine context (Administrative PowerShell)
+Script must be executed once in user context.
 You must first use the other Script for the Machine Context (Teams_Autostart_Reset_LM.ps1)
 
 .NOTES
