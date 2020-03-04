@@ -2,6 +2,6 @@
 PowerShell Scripts
 
 
-Teams_Autostart_Reset.ps1
+Teams_Autostart_Reset_CU.ps1  ->  Script must be executed once in user context
 
-Script must execute in User Context.
+Teams_Autostart_Reset_LM.ps1  ->  Script must be executed once in machine context (Adminstrative PowerShell)
