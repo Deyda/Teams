@@ -17,7 +17,6 @@ Use this script to clear the installed Microsoft Teams application. Run this Pow
 Add-Type -Name win -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' -Namespace native
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle,0)
 
-$TeamsUpdateExePath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams', 'Update.exe')
 $TeamsUpdateExePathMachine = [System.IO.Path]::Combine('c:\Program Files (x86)', 'Microsoft', 'Teams', 'Update.exe')
 $TeamsExePath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams')
 $TeamsExePathMachine = [System.IO.Path]::Combine('c:\Program Files (x86)', 'Microsoft', 'Teams')
@@ -32,61 +31,6 @@ $TeamsPresenceAddinPathMachine = [System.IO.Path]::Combine('c:\Program Files (x8
 
 try
 {
-    If (Test-Path -Path $TeamsUpdateExePath) {
-        Write-Host "Uninstalling Microsoft Teams..."
-
-        # Kill teams.exe
-        If (Get-Process -Name Teams -ErrorAction SilentlyContinue) {
-            Stop-Process -Name Teams -Force
-        }
-
-        # Uninstall app
-        $proc = Start-Process -FilePath $TeamsUpdateExePath -ArgumentList "-uninstall -s" -PassThru -ErrorAction SilentlyContinue
-        $proc.WaitForExit()
-        Write-Host "Deleting Microsoft Teams Install directory..."
-        Get-ChildItem $TeamsExePath -Recurse | Remove-Item
-        Remove-Item $TeamsExePath -Recurse -Force
-
-        # Delete Microsoft Teams AppData directory
-        If (Test-Path -Path $TeamsAppData) {
-            Write-Host "Deleting Microsoft/Teams AppData directory..."
-            Get-ChildItem $TeamsAppData -Recurse | Remove-Item -Force
-            Remove-Item $TeamsAppData -Recurse -Force 
-        }
-
-        If (Test-Path -Path $TeamsAppData2) {
-            Write-Host "Deleting Microsoft Teams AppData directory..."
-            Get-ChildItem $TeamsAppData2 -Recurse | Remove-Item -Force
-            Remove-Item $TeamsAppData2 -Recurse -Force 
-        }
-
-        # Delete Microsoft Teams LocalAppData directory
-        If (Test-Path -Path $TeamsLocalAppData) {
-            Write-Host "Deleting Microsoft Teams LocalAppData directory..."
-            Get-ChildItem $TeamsLocalAppData -Recurse | Remove-Item -Force
-            Remove-Item $TeamsLocalAppData -Recurse -Force 
-        }
-
-        # Delete Microsoft Teams SquirrelTemp directory
-        If (Test-Path -Path $SquirrelTemp) {
-            Write-Host "Deleting Microsoft Teams SquirrelTemp directory..."
-            Get-ChildItem $SquirrelTemp -Recurse | Remove-Item -Force 
-            Remove-Item $SquirrelTemp -Recurse -Force 
-        }
-
-        # Delete Microsoft Teams start menu shortcut
-        If (Test-Path -Path $TeamsStartMenuShortcut) {
-            Write-Host "Deleting Microsoft Teams start menu shortcut..."
-            Remove-Item -Path $TeamsStartMenuShortcut -Recurse
-        }
-
-        # Delete Microsoft Teams desktop shortcut
-        If (Test-Path -Path $TeamsDesktopShortcut) {
-            Write-Host "Deleting Microsoft Teams desktop shortcut"
-            Remove-Item -Path $TeamsDesktopShortcut -Recurse
-        }
-
-    }
     If (Test-Path -Path $TeamsExePathMachine) {
         Write-Host "Uninstalling Microsoft Teams Machine Based..."
 
@@ -95,12 +39,12 @@ try
             Stop-Process -Name Teams -Force
         }
         
-        If (Test-Path -Path $TeamsUpdateExePathMachine) {
-        Write-Host "Uninstalling Microsoft Teams Machine Based..."
+        #If (Test-Path -Path $TeamsUpdateExePathMachine) {
+        #Write-Host "Uninstalling Microsoft Teams Machine Based..."
         # Uninstall app
-        $proc = Start-Process -FilePath $TeamsUpdateExePathMachine -ArgumentList "-uninstall -s" -PassThru -ErrorAction SilentlyContinue
-        $proc.WaitForExit()
-        }
+        #$proc = Start-Process -FilePath $TeamsUpdateExePathMachine -ArgumentList "-uninstall -s" -PassThru -ErrorAction SilentlyContinue
+        #$proc.WaitForExit()
+        #}
         
         If (Test-Path -Path $TeamsExePathMachine) {
         Write-Host "Deleting Microsoft Teams Machine Based Install directory..."
