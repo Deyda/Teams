@@ -14,8 +14,8 @@ Use this script to clear the installed Microsoft Teams application. Run this Pow
 
 
 # Hide powershell prompt
-#Add-Type -Name win -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' -Namespace native
-#[native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle,0)
+Add-Type -Name win -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);' -Namespace native
+[native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle,0)
 
 $TeamsUpdateExePath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams', 'Update.exe')
 $TeamsUpdateExePathMachine = [System.IO.Path]::Combine('c:\Program Files (x86)', 'Microsoft', 'Teams', 'Update.exe')
