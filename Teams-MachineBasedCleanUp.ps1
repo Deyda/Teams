@@ -24,8 +24,8 @@ $TeamsAppData = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft', 'Teams')
 $TeamsAppData2 = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft Teams')
 $TeamsLocalAppData = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams')
 $SquirrelTemp = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'SquirrelTemp ')
-$TeamsStartMenuShortcut = "\\domain\share\$env:USERNAME.$env:USERDOMAIN\Start Menu\Programs\Microsoft Corporation"
-$TeamsDesktopShortcut = "\\domain\share\$env:USERNAME.$env:USERDOMAIN\Desktop\Microsoft Teams.lnk"
+$TeamsStartMenuShortcut = “c:\users\$env:USERNAME.$env:USERDOMAIN\Start Menu\Programs\Microsoft Corporation”
+$TeamsDesktopShortcut = “c:\users\$env:USERNAME.$env:USERDOMAIN\Desktop\Microsoft Teams.lnk"
 $TeamsPresenceAddinPathMachine = [System.IO.Path]::Combine('c:\Program Files (x86)', 'Microsoft', 'TeamsPresenceAddin')
 
 
