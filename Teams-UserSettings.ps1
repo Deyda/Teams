@@ -1,43 +1,47 @@
-# ****************************************************
-# D. Mohrmann, S&L Firmengruppe, Twitter: @mohrpheus78
-# Modify MS Teams VDI App
-# ****************************************************
-
 <#
-    .SYNOPSIS
-        Change Teams setting per user
-		
-    .Description
-        Change the MS Teams VDI installer app settings, such as GPU acceleration or fully close Teams app 
-		
-    .EXAMPLE
-	WEM:
-	Path: powershell.exe
-        Arguments: -executionpolicy bypass -file "C:\Program Files (x86)\SuL\Scripts\Teams User Settings.ps1"  
-	    
-    .NOTES
-	Execute as WEM external task, logonscript or task at logon
-	You can add seeting 
+.SYNOPSIS
+This script allows you to define the Teams settings per user
+
+.DESCRIPTION
+Define the Teams settings.
+
+.NOTES
+  Version:         1.1
+  Original Author: D. Mohrmann, S&L Firmengruppe, Twitter: @mohrpheus7
+  Rewrite Author:  Manuel Winkel <www.deyda.net>
+  Creation Date:   2020-11-30
+  Purpose/Change:  Added more Teams settings
+  
+ .EXAMPLE
+  WEM:
+  Path: powershell.exe
+  Arguments: -executionpolicy bypass -file Teams-UserSettings.ps1" 
 #>
 
-# Define settings
+#Define settings
 param(
-# Enable or disable GPU acceleration
+#Enable or disable GPU acceleration
 [boolean]$disableGpu=$True,
-# Fully close Teams App
+#Fully close Teams App
 [boolean]$runningOnClose=$False
+#Auto-start application
+[boolean]$openAtLogin=$False
+#Register Teams as the default chat app for office
+[boolean]$registerAsIMProvider=$False
 )
 
-# Get Teams Configuration
+#Read Teams Configuration
 $FileContent=Get-Content -Path "$ENV:APPDATA\Microsoft\Teams\desktop-config.json"
 
-# Convert file content from JSON format to PowerShell object
+#Convert file to PowerShell object
 $JSONObject=ConvertFrom-Json -InputObject $FileContent
 
-# Update Object settings
+#Update settings
 $JSONObject.appPreferenceSettings.disableGpu=$disableGpu
 $JSONObject.appPreferenceSettings.runningOnClose=$runningOnClose
+$JSONObject.appPreferenceSettings.openAtLogin=$openAtLogin
+$JSONObject.appPreferenceSettings.registerAsIMProvider=$registerAsIMProvider
 $NewFileContent=$JSONObject | ConvertTo-Json
 
-# Update configuration in file
+#Rewrite configuration to file
 $NewFileContent | Set-Content -Path "$ENV:APPDATA\Microsoft\Teams\desktop-config.json" 
