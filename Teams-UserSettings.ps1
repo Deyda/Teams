@@ -23,11 +23,13 @@ param(
 #Enable or disable GPU acceleration
 [boolean]$disableGpu=$True,
 #Fully close Teams App
-[boolean]$runningOnClose=$False
+[boolean]$runningOnClose=$False,
 #Auto-start application
-[boolean]$openAtLogin=$False
+[boolean]$openAtLogin=$False,
 #Register Teams as the default chat app for office
-[boolean]$registerAsIMProvider=$False
+[boolean]$registerAsIMProvider=$False,
+#Open Teams hidden
+[boolean]$openAsHidden=$False
 )
 
 #Read Teams Configuration
@@ -41,6 +43,7 @@ $JSONObject.appPreferenceSettings.disableGpu=$disableGpu
 $JSONObject.appPreferenceSettings.runningOnClose=$runningOnClose
 $JSONObject.appPreferenceSettings.openAtLogin=$openAtLogin
 $JSONObject.appPreferenceSettings.registerAsIMProvider=$registerAsIMProvider
+$JSONObject.appPreferenceSettings.openAsHidden=$openAsHidden
 $NewFileContent=$JSONObject | ConvertTo-Json
 
 #Rewrite configuration to file
