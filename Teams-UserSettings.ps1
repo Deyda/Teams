@@ -6,7 +6,7 @@ This script allows you to define the Teams settings per user
 Define the Teams settings.
 
 .NOTES
-  Version:         1.1
+  Version:         1.2
   Original Author: D. Mohrmann, S&L Firmengruppe, Twitter: @mohrpheus7
   Rewrite Author:  Manuel Winkel <www.deyda.net>
   Creation Date:   2020-11-30
@@ -32,13 +32,13 @@ param(
 [boolean]$openAsHidden=$False
 )
 
-#Read Teams Configuration
+#Read Teams Configuration from desktop-config.json
 $FileContent=Get-Content -Path "$ENV:APPDATA\Microsoft\Teams\desktop-config.json"
 
-#Convert file to PowerShell object
+#Convert file to PowerShell object from desktop-config.json
 $JSONObject=ConvertFrom-Json -InputObject $FileContent
 
-#Update settings
+#Update settings from desktop-config.json
 $JSONObject.appPreferenceSettings.disableGpu=$disableGpu
 $JSONObject.appPreferenceSettings.runningOnClose=$runningOnClose
 $JSONObject.appPreferenceSettings.openAtLogin=$openAtLogin
@@ -46,5 +46,5 @@ $JSONObject.appPreferenceSettings.registerAsIMProvider=$registerAsIMProvider
 $JSONObject.appPreferenceSettings.openAsHidden=$openAsHidden
 $NewFileContent=$JSONObject | ConvertTo-Json
 
-#Rewrite configuration to file
+#Rewrite configuration to file from desktop-config.json
 $NewFileContent | Set-Content -Path "$ENV:APPDATA\Microsoft\Teams\desktop-config.json" 
